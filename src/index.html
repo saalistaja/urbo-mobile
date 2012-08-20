@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <!-- !!!DO REMOVE THIS WHEN GOING LIVE!!!, prevent cache -->
+    <!-- !!!REMOVE THIS WHEN GOING LIVE!!!, prevent cache -->
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache" />
     <title>Urbo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
-    <script type="text/javascript" charset="utf-8" src="ChildBrowser.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../ChildBrowser.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.css" />
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.js"></script>
@@ -117,13 +117,15 @@
     </div>
 </div>
 
+
 <div data-role="dialog" id="account_dialog">
+
     <div data-role="header">
         <h1>Přihlas se!</h1>
     </div>
     <div data-role="content">
         <a href="#" data-role="button" onclick="dismissDialog();googleOAuth();">Google</a>
-        <a href="#" class="ui-disabled" data-role="button">Facebook</a>
+        <a href="#" data-role="button" onclick="dismissDialog();facebookOAuth();">Facebook</a>
         <a href="#" class="ui-disabled" data-role="button">Twitter</a>
         <a href="#" data-role="button" onclick="dismissDialog();anonAuth();">Anonymní zbabělec</a>
     </div>
