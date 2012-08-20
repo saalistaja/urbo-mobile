@@ -211,96 +211,53 @@ function dismissDialog() {
 }
 
 function googleOAuth() {
-    var my_client_id = Urbo.Settings.Oauth.Google.ClientId,
-        my_redirect_uri = Urbo.Settings.Oauth.Google.CallbackURL,
-        client_secret =  Urbo.Settings.Oauth.Google.ClientSecret;
-
-    var authorize_url = "https://accounts.google.com/o/oauth2/auth";
-    authorize_url +=  "?response_type=token";
-    authorize_url += "&scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile";
-    authorize_url += "&client_id=" + my_client_id;
-    authorize_url += "&redirect_uri=" + my_redirect_uri;
-
-    client_browser = window.plugins.childBrowser;
-
-    console.log('Opening authorize URL: ' + authorize_url);
-    client_browser.onLocationChange = function(loc){
-        if (loc.indexOf(Urbo.Settings.Oauth.Google.CallbackURL) > -1) {
-            var access_token = loc.match(/access_token=(.*)$/)[1]
-            console.log('Access token is: ' + access_token);
-            client_browser.close();
-            console.log('encoded token: ' + encodeURIComponent(access_token));
-            console.log('encoded uri: ' + encodeURIComponent(my_redirect_uri));
-
-            $.ajax({
-                headers: {"Content-Type": "application/json"},
-                type: "GET",
-                url: "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + access_token,
-                context: document.body,
-                dataType: "json"
-            }).done(function(data) {
-                    console.log('Obtained profile: ' + JSON.stringify(data));
-
-                    console.log('email: ' + data.email);
-                    $('body').data("identification", data.email);
-                    $('body').data("provider", "GOOGLE");
-                    //this is not in the response :/
-                    //$('body').data("first_name", data.given_name);
-                    //$('body').data("family_name", data.family_name);
-                    $('#login_button .ui-btn-text').text(data.email)
-
-                }).fail(function (data) {
-                    console.log('Profile request failed: ' + JSON.stringify(data));
-                }
-            );
-        }
-    };
-
-    if (client_browser != null) {
-        client_browser.showWebPage(authorize_url);
-    }
+    oAuth(Urbo.Settings.Oauth.Google.ClientId,
+        Urbo.Settings.Oauth.Google.CallbackURL,
+        "https://accounts.google.com/o/oauth2/auth",
+        "https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/oauth2/v2/userinfo",
+        "GOOGLE"
+    );
 }
 
 function facebookOAuth() {
-    var my_client_id = Urbo.Settings.Oauth.Facebook.ClientId,
-        my_redirect_uri = Urbo.Settings.Oauth.Facebook.CallbackURL,
-        client_secret =  Urbo.Settings.Oauth.Facebook.ClientSecret;
+    oAuth(Urbo.Settings.Oauth.Facebook.ClientId,
+        Urbo.Settings.Oauth.Facebook.CallbackURL,
+        "https://m.facebook.com/dialog/oauth",
+        "user_about_me+email",
+        "https://graph.facebook.com/me",
+        "FACEBOOK"
+    );
+}
 
-    var authorize_url = "https://m.facebook.com/dialog/oauth";
+function oAuth(client_id, redirect_uri, authorize_url, scope, userinfo_url, provider) {
+
     authorize_url +=  "?response_type=token";
-    authorize_url += "&scope=user_about_me+email";
+    authorize_url += "&scope=" + scope;
     //authorize_url += "&scope=https://www.googleapis.com/auth/userinfo.profile"; returns name etc.
-    authorize_url += "&client_id=" + my_client_id;
-    authorize_url += "&redirect_uri=" + my_redirect_uri;
+    authorize_url += "&client_id=" + client_id;
+    authorize_url += "&redirect_uri=" + redirect_uri;
 
     client_browser = window.plugins.childBrowser;
 
     console.log('Opening authorize URL: ' + authorize_url);
     client_browser.onLocationChange = function(loc){
-        if (loc.indexOf(Urbo.Settings.Oauth.Facebook.CallbackURL) > -1) {
+        if (loc.indexOf(redirect_uri) > -1) {
             var access_token = loc.match(/access_token=(.*)$/)[1]
             console.log('Access token is: ' + access_token);
             client_browser.close();
             console.log('encoded token: ' + encodeURIComponent(access_token));
-            console.log('encoded uri: ' + encodeURIComponent(my_redirect_uri));
+            console.log('encoded uri: ' + encodeURIComponent(redirect_uri));
 
             $.ajax({
                 headers: {"Content-Type": "application/json"},
                 type: "GET",
-                url: "https://graph.facebook.com/me?access_token=" + access_token,
+                url: userinfo_url + "?access_token=" + access_token,
                 context: document.body,
                 dataType: "json"
             }).done(function(data) {
                     console.log('Obtained profile: ' + JSON.stringify(data));
-
-                    console.log('email: ' + data.email);
-                    $('body').data("identification", data.email);
-                    $('body').data("provider", "FACEBOOK");
-                    //this is not in the response :/
-                    //$('body').data("first_name", data.given_name);
-                    //$('body').data("family_name", data.family_name);
-                    $('#login_button .ui-btn-text').text(data.email)
-
+                    parseoAuthUser(data, provider);
                 }).fail(function (data) {
                     console.log('Profile request failed: ' + JSON.stringify(data));
                 }
@@ -313,6 +270,15 @@ function facebookOAuth() {
         client_browser.showWebPage(authorize_url);
     }
 }
+
+function parseoAuthUser(data, provider) {
+    console.log('email: ' + data.email);
+    $('body').data("identification", data.email);
+    $('body').data("name", data.name);
+    $('body').data("provider", provider);
+    $('#login_button .ui-btn-text').text(data.name + "@" + provider)
+}
+
 
 
 
