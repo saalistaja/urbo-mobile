@@ -287,8 +287,9 @@ function parseoAuthUser(data, provider) {
  */
 function anonAuth() {
     $('body').data("identification", "Anonymní zbabělec");
+    $('body').data("name", "Anonymní zbabělec");
     $('body').data("provider", "NONE");
-    $('#login_button .ui-btn-text').text($('body').data("identification"));
+    $('#login_button .ui-btn-text').text($('body').data("name"));
     return true;
 }
 
