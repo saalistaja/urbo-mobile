@@ -148,8 +148,8 @@ function uploadData(photoId) {
             "longitude": $('body').data('longitude'),
             "photo_id": photoId,
             "identification": $('body').data('identification'),
-            "provider": $('body').data('provider')
-
+            "provider": $('body').data('provider'),
+            "name": $('body').data('name')
         }
     }
     var dataAsString = JSON.stringify(jsonObj);
@@ -216,7 +216,7 @@ function googleOAuth() {
         "https://accounts.google.com/o/oauth2/auth",
         "https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/oauth2/v2/userinfo",
-        "GOOGLE"
+        "Google"
     );
 }
 
@@ -226,7 +226,7 @@ function facebookOAuth() {
         "https://m.facebook.com/dialog/oauth",
         "user_about_me+email",
         "https://graph.facebook.com/me",
-        "FACEBOOK"
+        "Facebook"
     );
 }
 
@@ -286,9 +286,9 @@ function parseoAuthUser(data, provider) {
  * Allows anonymous case submission.
  */
 function anonAuth() {
-    $('body').data("identification", "Anonymní zbabělec");
+    $('body').data("identification", "anonymous");
     $('body').data("name", "Anonymní zbabělec");
-    $('body').data("provider", "NONE");
+    $('body').data("provider", "None");
     $('#login_button .ui-btn-text').text($('body').data("name"));
     return true;
 }
