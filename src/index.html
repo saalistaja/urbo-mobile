@@ -27,7 +27,7 @@
     </div>
     <div data-role="content">
         <p><a href="#create" data-icon="plus" data-role="button" data-transition="flip" onclick="newCase();">Nový urbo případ</a></p>
-        <p><a href="#" data-icon="home" data-role="button" data-transition="flip">Moje urbo případy</a></p>
+        <p><a href="#myitems" data-icon="search" data-role="button" data-transition="flip">Moje urbo případy</a></p>
         <p><a href="#about" data-icon="info" data-role="button" data-transition="flip">O aplikaci</a></p>
     </div>
 </div>
@@ -61,6 +61,28 @@
     </div>
 </div>
 
+<div data-role="page" id="myitems">
+    <div data-role="header">
+        <h1>Moje případy</h1>
+        <a href="#menu" data-icon="arrow-l">Menu</a>
+    </div>
+    <div class="ui-content" data-role="content" role="main">
+        <div class="content-primary">
+        <ul data-divider-theme="d" data-theme="d" data-role="listview" class="ui-listview">
+            <li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-d ui-li-has-count">Friday, October 8, 2010 <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">2</span></li>
+            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="d" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-d"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="index.html" class="ui-link-inherit"><p class="ui-li-aside ui-li-desc"><strong>6:24</strong>PM</p>
+                
+                <h3 class="ui-li-heading">Stephen Weber</h3>
+                <p class="ui-li-desc"><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
+                <p class="ui-li-desc">Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+                
+                
+            </a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>
+            </ul>
+        </div>
+    </div>        
+</div>
+    
 <div data-role="page" id="about">
     <div data-role="header">
         <h1>O aplikaci</h1>

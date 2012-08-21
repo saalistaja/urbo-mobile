@@ -23,6 +23,7 @@ Urbo.Settings.Api.hostName = "urbo.herokuapp.com";
 Urbo.Settings.Api.hostPort = "80";
 Urbo.Settings.Api.photoUploadRelativeUrl = "/api/v1/uploadPhoto";
 Urbo.Settings.Api.urboItemSaveRelativeUrl = "/api/v1/case";
+Urbo.Settings.Api.urboListFeedbacks = "/api/v1/findByAuthor"
 
 Urbo.Settings.Oauth.Google.CallbackURL = "http://urbo.herokuapp.com/oauth2callback";
 Urbo.Settings.Oauth.Google.ClientSecret = "NMaJccwi-j_kHLFYRDTFiUZv";
@@ -41,7 +42,6 @@ Urbo.Settings.Api.getUrboItemSaveUrl = function() {
     return this.createFullUrlFor(this.urboItemSaveRelativeUrl);
 };
 
-
-	
-	
-	
+Urbo.Settings.Api.getUrboListFeedbacksUrl = function() {
+    return this.createFullUrlFor(this.urboListFeedbacks);
+}
