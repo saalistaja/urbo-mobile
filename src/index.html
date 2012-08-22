@@ -1,173 +1,185 @@
 <!DOCTYPE HTML>
-<html>
-<head>
-    <!-- !!!REMOVE THIS WHEN GOING LIVE!!!, prevent cache -->
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <title>Urbo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" charset="utf-8" src="../../cordova-2.0.0.js"></script>
-    <script type="text/javascript" charset="utf-8" src="../../ChildBrowser.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.css" />
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script src="js/index.js"></script>
-    <script src="js/urbo.js"></script>
-    <script src="js/urbo_settings.js"></script>
-</head>
-<body>
-
-<!-- Pages -->
-
-<div data-role="page" id="menu">
-    <div data-role="header">
-        <h1>Urbo</h1>
-    </div>
-    <div data-role="content">
-        <p><a href="#create" data-icon="plus" data-role="button" data-transition="flip" onclick="newCase();">Nový urbo případ</a></p>
-        <p><a href="#myitems" data-icon="search" data-role="button" data-transition="flip">Moje urbo případy</a></p>
-        <p><a href="#about" data-icon="info" data-role="button" data-transition="flip">O aplikaci</a></p>
-    </div>
-</div>
-
-<div data-role="page" id="create">
-    <div data-role="header">
-        <h1>Nový případ</h1>
-        <a href="#menu" data-icon="delete">Zrušit</a>
-        <a href="#" data-icon="check" onclick="sendUrboItemToServer();">Odeslat</a>
-    </div>
-    <div data-role="content">
-        <div data-role="fieldcontain" class="ui-hide-label">
-            <label for="title">Titulek:</label>
-            <input type="text" name="title" id="title" value="" placeholder="Titulek"/>
-        </div>
-        <div data-role="fieldcontain" class="ui-hide-label">
-            <label for="description">Podrobnosti:</label>
-            <textarea cols="40" rows="8" name="description" id="description" placeholder="Podrobnosti.."></textarea>
-        </div>
-        <div class="ui-grid-a">
-            <div class="ui-block-a">
-                <img id="mapThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;" />
-                <a href="#map_dialog" data-rel="dialog" data-transition="pop" data-role="button">Místo...</a>
+<html class="ui-mobile">
+    <head>
+        <!-- !!!REMOVE THIS WHEN GOING LIVE!!!, prevent cache -->
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <title>Urbo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <script type="text/javascript" charset="utf-8" src="../../cordova-2.0.0.js"></script>
+                <script type="text/javascript" charset="utf-8" src="../../ChildBrowser.js"></script>
+                <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.css" />
+                <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+                <script src="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+                <script type="text/javascript" charset="utf-8" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+                <script src="js/index.js"></script>
+                <script src="js/urbo.js"></script>
+                <script src="js/urbo_settings.js"></script>
+                </head>
+    <body>
+        
+        <!-- Pages -->
+        
+        <div data-role="page" id="menu">
+            <div data-role="header">
+                <h1>Urbo</h1>
             </div>
-            <div class="ui-block-b">
-                <img id="photoThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;"/>
-                <a href="#photo_dialog" data-rel="dialog" data-transition="pop" data-role="button">Fotka...</a>
+            <div data-role="content">
+                <p><a href="#create" data-icon="plus" data-role="button" data-transition="flip" onclick="newCase();">Nový urbo případ</a></p>
+                <p><a href="#mycases" data-icon="search" data-role="button" data-transition="flip" onclick="listMyCases();">Moje urbo případy</a></p>
+                <p><a href="#about" data-icon="info" data-role="button" data-transition="flip">O aplikaci</a></p>
             </div>
         </div>
-        <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
-    </div>
-</div>
-
-<div data-role="page" id="myitems">
-    <div data-role="header">
-        <h1>Moje případy</h1>
-        <a href="#menu" data-icon="arrow-l">Menu</a>
-    </div>
-    <div class="ui-content" data-role="content" role="main">
-        <div class="content-primary">
-        <ul data-divider-theme="d" data-theme="d" data-role="listview" class="ui-listview">
-            <li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-d ui-li-has-count">Friday, October 8, 2010 <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">2</span></li>
-            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="d" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-d"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="index.html" class="ui-link-inherit"><p class="ui-li-aside ui-li-desc"><strong>6:24</strong>PM</p>
-                
-                <h3 class="ui-li-heading">Stephen Weber</h3>
-                <p class="ui-li-desc"><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
-                <p class="ui-li-desc">Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-                
-                
-            </a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>
-            </ul>
+        
+        <div data-role="page" id="create">
+            <div data-role="header">
+                <h1>Nový případ</h1>
+                <a href="#menu" data-icon="delete">Zrušit</a>
+                <a href="#" data-icon="check" onclick="sendUrboItemToServer();">Odeslat</a>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <label for="title">Titulek:</label>
+                    <input type="text" name="title" id="title" value="" placeholder="Titulek"/>
+                </div>
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <label for="description">Podrobnosti:</label>
+                    <textarea cols="40" rows="8" name="description" id="description" placeholder="Podrobnosti.."></textarea>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <img id="mapThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;" />
+                        <a href="#map_dialog" data-rel="dialog" data-transition="pop" data-role="button">Místo...</a>
+                    </div>
+                    <div class="ui-block-b">
+                        <img id="photoThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;"/>
+                        <a href="#photo_dialog" data-rel="dialog" data-transition="pop" data-role="button">Fotka...</a>
+                    </div>
+                </div>
+                <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
+            </div>
         </div>
-    </div>        
-</div>
-    
-<div data-role="page" id="about">
-    <div data-role="header">
-        <h1>O aplikaci</h1>
-        <a href="#menu" data-icon="back" data-transition="flip">Zpět</a>
-    </div>
-    <div data-role="content">
-        <h2>Zlepši svět kolem sebe</h2>
-        <p>Nahlášené problémy předáváme na příslušný <strong>obecní úřad</strong> a staráme se o nápravu.</p>
-        <h2>Přidej se k nám</h2>
-        <p>Urbo je 100% <strong>open-source</strong>, každý může <a href="https://github.com/krtek/urbo">přiložit ruku k dílu</a>.</p>
-        <p><h4>&copy; <a href="http://urbo.cz">Urbo</a>, 2012</h4></p>
-        <a href="#menu" data-icon="back" data-role="button" data-transition="flip">Ok</a>
-    </div>
-</div>
-
-<!-- Dialogs -->
-
-<div data-role="dialog" id="map_dialog">
-    <div data-role="header">
-        <h1>Vyber místo</h1>
-        <a href="#" data-icon="check" onclick="locationManuallySelected();">Hotovo</a>
-    </div>
-    <div data-role="content">
-        <div id="mapWindow" style="width: 100%; min-height: 400px; height: 100%;"></div>
-    </div>
-</div>
-
-<div data-role="dialog" id="photo_dialog">
-    <div data-role="header">
-        <h1>Vybrat fotku</h1>
-    </div>
-    <div data-role="content">
-        <a href="#" data-role="button" onClick="getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);">Z galerie</a>
-        <a href="#" data-role="button" onClick="getPhoto(Camera.PictureSourceType.CAMERA);">Vyfotit</a>
-    </div>
-</div>
-
-<div data-role="dialog" id="send_dialog">
-    <div data-role="header">
-        <h1>Odesílám</h1>
-    </div>
-    <div data-role="content">
-        <div id="send_message">Odesílám fotku...</div>
-    </div>
-</div>
-
-<div data-role="dialog" id="error_dialog">
-    <div data-role="header">
-        <h1>Chybka!</h1>
-    </div>
-    <div data-role="content">
-        <div id="error_message">Chyba</div>
-        <a href="#create" data-role="button">OK</a>
-    </div>
-</div>
-
-
-<div data-role="dialog" id="account_dialog">
-
-    <div data-role="header">
-        <h1>Přihlas se!</h1>
-    </div>
-    <div data-role="content">
-        <a href="#" data-role="button" onclick="dismissDialog();googleOAuth();">Google</a>
-        <a href="#" data-role="button" onclick="dismissDialog();facebookOAuth();">Facebook</a>
-        <a href="#" class="ui-disabled" data-role="button">Twitter</a>
-        <a href="#" data-role="button" onclick="dismissDialog();anonAuth();">Anonymní zbabělec</a>
-    </div>
-</div>
-
-<!-- Page initialization script -->
-
-<script>
-    $(document).ready(function() {
-        console.log("init...");
-        app.initialize();
-    });
-
-    $(document).bind('pageshow', function(e, data) {
-        // show page
-        var $page = $(e.target);
-        if ($page.attr('id') == 'map_dialog') {
-            showMapToAdjust($('body').data('latitude'), $('body').data('longitude'));
-        }
-    });
-</script>
-</body>
+        
+        <div data-role="page" id="mycases" class="ui-mobile-viewport ui-overlay-c">
+            <div data-role="header">
+                <a href="#menu" data-icon="arrow-l">Menu</a>
+                <h1>Moje případy</h1>
+                <a href="#mycases" data-icon="refresh" onclick="refreshCases();">Obnovit</a>
+            </div>
+            <div data-role="content" class="ui-content" role="main">
+                <div class="content-primary">
+                    <div id="myCasesLoginMessage" style="display: none;">Pro zobrazení Vašich případů se prosím přihlaste.</div>
+                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
+                    <div id="myCasesEmptyMessage" style="display: none;">Neevidujeme žádné Vaše případy.</div>
+                    <ul id="myCasesListView" lass="ui-listview" data-role="listview" data-inset="true">
+                        <li class="ui-li ui-li-divider ui-bar-b" data-role="list-divider" role="heading">20.5.2012</li>
+                        <li id="caseItem" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c">
+                            <div class="ui-btn-inner ui-li">
+                                <div class="ui-btn-text">
+                                    <a style="white-space:normal" class="ui-link-inherit" href="index.html">
+                                        <p align="right">Odesláno</p>
+                                        <p>Rozbita silnice, neda se spravit</p>
+                                    </a>
+                                </div>
+                                <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"> </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div><!--/content-primary -->
+            </div>
+        </div>
+        
+        <div data-role="page" id="about">
+            <div data-role="header">
+                <h1>O aplikaci</h1>
+                <a href="#menu" data-icon="back" data-transition="flip">Zpět</a>
+            </div>
+            <div data-role="content">
+                <h2>Zlepši svět kolem sebe</h2>
+                <p>Nahlášené problémy předáváme na příslušný <strong>obecní úřad</strong> a staráme se o nápravu.</p>
+                <h2>Přidej se k nám</h2>
+                <p>Urbo je 100% <strong>open-source</strong>, každý může <a href="https://github.com/krtek/urbo">přiložit ruku k dílu</a>.</p>
+                <p><h4>&copy; <a href="http://urbo.cz">Urbo</a>, 2012</h4></p>
+                <a href="#menu" data-icon="back" data-role="button" data-transition="flip">Ok</a>
+            </div>
+        </div>
+        
+        <!-- Dialogs -->
+        
+        <div data-role="dialog" id="map_dialog">
+            <div data-role="header">
+                <h1>Vyber místo</h1>
+                <a href="#" data-icon="check" onclick="locationManuallySelected();">Hotovo</a>
+            </div>
+            <div data-role="content">
+                <div id="mapWindow" style="width: 100%; min-height: 400px; height: 100%;"></div>
+            </div>
+        </div>
+        
+        <div data-role="dialog" id="photo_dialog">
+            <div data-role="header">
+                <h1>Vybrat fotku</h1>
+            </div>
+            <div data-role="content">
+                <a href="#" data-role="button" onClick="getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);">Z galerie</a>
+                <a href="#" data-role="button" onClick="getPhoto(Camera.PictureSourceType.CAMERA);">Vyfotit</a>
+            </div>
+        </div>
+        
+        <div data-role="dialog" id="send_dialog">
+            <div data-role="header">
+                <h1>Odesílám</h1>
+            </div>
+            <div data-role="content">
+                <div id="send_message">Odesílám fotku...</div>
+            </div>
+        </div>
+        
+        <div data-role="dialog" id="error_dialog">
+            <div data-role="header">
+                <h1>Chybka!</h1>
+            </div>
+            <div data-role="content">
+                <div id="error_message">Chyba</div>
+                <a href="#create" data-role="button">OK</a>
+            </div>
+        </div>
+        
+        
+        <div data-role="dialog" id="account_dialog">
+            
+            <div data-role="header">
+                <h1>Přihlas se!</h1>
+            </div>
+            <div data-role="content">
+                <a href="#" data-role="button" onclick="dismissDialog();googleOAuth();">Google</a>
+                <a href="#" data-role="button" onclick="dismissDialog();facebookOAuth();">Facebook</a>
+                <a href="#" class="ui-disabled" data-role="button">Twitter</a>
+                <a href="#" data-role="button" onclick="dismissDialog();anonAuth();">Anonymní zbabělec</a>
+            </div>
+        </div>
+        
+        <!-- Page initialization script -->
+        
+        <script>
+            $(document).ready(function() {
+                              console.log("init...");
+                              app.initialize();
+                              });
+            
+            $(document).bind('pageshow', function(e, data) {
+                             // show page
+                             var $page = $(e.target);
+                             if ($page.attr('id') == 'map_dialog') {
+                             showMapToAdjust($('body').data('latitude'), $('body').data('longitude'));
+                             }
+                             });
+            
+            // Check if the user is authorized
+            $('#account_dialog').live('pagehide',function(event) {
+                                  listMyCases();
+                              });
+            </script>
+    </body>
 </html>

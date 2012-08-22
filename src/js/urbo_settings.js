@@ -14,24 +14,28 @@ Urbo.Settings.Oauth.Facebook = Urbo.Settings.Oauth.Facebook || {};
  */
 Urbo.Settings.Api.createFullUrlFor = function(relativeApiUrl) {
 
-    return this.protocol + "://" + this.hostName + ":" + this.hostPort + relativeApiUrl;
+    return this.protocol + "://" + this.hostName + ":" + this.hostPort + Urbo.Settings.Api.context + relativeApiUrl;
 
 };
 
 Urbo.Settings.Api.protocol = "http";
 Urbo.Settings.Api.hostName = "urbo.herokuapp.com";
+//Urbo.Settings.Api.hostName = "localhost";
 Urbo.Settings.Api.hostPort = "80";
+//Urbo.Settings.Api.hostPort = "8080";
+Urbo.Settings.Api.context = "";
+//Urbo.Settings.Api.context = "/urbo";
 Urbo.Settings.Api.photoUploadRelativeUrl = "/api/v1/uploadPhoto";
 Urbo.Settings.Api.urboItemSaveRelativeUrl = "/api/v1/case";
-Urbo.Settings.Api.urboListFeedbacks = "/api/v1/findByAuthor"
+Urbo.Settings.Api.urboListCases = "/apiFeedback/findByAuthor"
 
-Urbo.Settings.Oauth.Google.CallbackURL = "http://urbo.herokuapp.com/oauth2callback";
+Urbo.Settings.Oauth.Google.CallbackURL = "http://" + Urbo.Settings.Api.hostName + "/oauth2callback";
 Urbo.Settings.Oauth.Google.ClientSecret = "NMaJccwi-j_kHLFYRDTFiUZv";
 Urbo.Settings.Oauth.Google.ClientId = "445034773821-iv2qgdkf4a50paekcaq0kkrseolgc00m.apps.googleusercontent.com";
 
 Urbo.Settings.Oauth.Facebook.ClientSecret = "658ce4d04f10ee67aff932f131f1e99f";
 Urbo.Settings.Oauth.Facebook.ClientId = "277531465694194";
-Urbo.Settings.Oauth.Facebook.CallbackURL = "http://urbo.herokuapp.com/oauth2callback";
+Urbo.Settings.Oauth.Facebook.CallbackURL = "http://" + Urbo.Settings.Api.hostName + "/oauth2callback";
 
 
 Urbo.Settings.Api.getPhotoUploadUrl = function() {
@@ -42,6 +46,6 @@ Urbo.Settings.Api.getUrboItemSaveUrl = function() {
     return this.createFullUrlFor(this.urboItemSaveRelativeUrl);
 };
 
-Urbo.Settings.Api.getUrboListFeedbacksUrl = function() {
-    return this.createFullUrlFor(this.urboListFeedbacks);
+Urbo.Settings.Api.getUrboListCasesUrl = function() {
+    return this.createFullUrlFor(this.urboListCases);
 }

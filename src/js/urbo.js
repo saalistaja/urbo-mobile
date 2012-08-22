@@ -280,8 +280,6 @@ function parseoAuthUser(data, provider) {
 }
 
 
-
-
 /**
  * Allows anonymous case submission.
  */
@@ -299,4 +297,61 @@ function newCase() {
     $("#description").val(null);
     $('#photoThumbnail').attr('src', null);
     //$.mobile.changePage('#create','flip',false,true);
+}
+
+function listMyCases() {
+    if($('body').data("provider") == undefined) {
+        document.getElementById('myCasesLoginMessage').style.display = 'block';
+        return;
+    } else {
+        document.getElementById('myCasesLoginMessage').style.display = 'none';
+    }
+    
+    // we have already some feedbacks
+    if($('body').data("feedbacks") != undefined) {
+        return;
+    }
+    
+    console.log("Looking for cases of: " + $('body').data("identification"));
+    $('#send_message').text("Hledám případy...");
+    $.mobile.changePage('#send_dialog','pop',false,true)
+
+    var jsonObj = {
+        "author": {
+            "identification": $('body').data("identification"),
+            "provider": $('body').data("provider")
+        }
+    }
+    console.log(Urbo.Settings.Api.getUrboListCasesUrl());
+
+    var dataAsString = JSON.stringify(jsonObj);
+    console.log(dataAsString);
+    $.ajax({
+           headers: {"Content-Type": "application/json"},
+           type: "POST",
+           url: Urbo.Settings.Api.getUrboListCasesUrl(),
+           data: dataAsString,
+           context: document.body
+           }).done(function(data) {
+                   console.log('Message sent.');
+                   console.log(data);
+                   if(data.feedbacks.length == 0) {
+                       document.getElementById('myCasesEmptyMessage').style.display = 'block';
+                   } else {
+                       document.getElementById('myCasesEmptyMessage').style.display = 'none';
+                       // nagenerovat elementy
+                   }
+                   $('#send_message').text("Hotovo.");
+                   dismissDialog();
+           }).fail(function () {
+                   console.log('Message failed.');
+                   dismissDialog();
+           });
+}
+
+function refreshCases() {
+    $('body').data("feedbacks", null);
+//    $("caseItem").clone().appendTo("myCasesListView")
+    //listMyCases();
+    return false;
 }
