@@ -363,9 +363,7 @@ function listMyCases() {
 
 function refreshCases() {
     $('body').data("feedbacks", null);
-    $('#myCasesListView').innerHTML = "";
+    $('#myCasesListView').empty();
     listMyCases();
-//    var feedbacks = [{state: "odesláno", title: "Problém č.1"}];
-//    $("#caseItemTemplate").tmpl(feedbacks).appendTo("#myCasesListView");
     return false;
 }
