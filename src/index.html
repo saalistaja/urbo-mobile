@@ -30,7 +30,7 @@
             <li id="caseItem" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c">
                 <div class="ui-btn-inner ui-li">
                     <div class="ui-btn-text">
-                        <a style="white-space:normal" class="ui-link-inherit" href="index.html">
+                        <a style="white-space:normal" class="ui-link-inherit" href="#casedetail" onclick="caseDetail(${id});">
                             <p align="right">${state}</p>
                             <p>${title}</p>
                         </a>
@@ -96,6 +96,62 @@
                     <ul id="myCasesListView" lass="ui-listview" data-role="listview" data-inset="true">
 
                     </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div data-role="page" id="casedetail" class="ui-mobile-viewport ui-overlay-c">
+            <div data-role="header">
+                <a href="#mycases" data-icon="arrow-l">Zpět</a>
+                <h1>Detail případu</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="detailTitle">
+                            Titulek
+                        </label>
+                        <input type="text" readonly="readonly" name="detailTitle" id="detailTitle" value=""/>
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="detailTitle">
+                        Stav
+                    </label>
+                    <fieldset data-role="controlgroup">
+                        <input type="text" readonly="readonly" name="detailState" id="detailState" value=""/>
+                    </fieldset>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup" data-mini="true">
+                                <label for="detailDateCreated">
+                                    Založeno
+                                </label>
+                                <input type="text" readonly="readonly" name="detailDateCreated" id="detailDateCreated" value=""/>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup" data-mini="true">
+                                <label for="detailLastUpdated">
+                                    Poslední změna
+                                </label>
+                                <input type="text" readonly="readonly" name="detailLastUpdated" id="detailLastUpdated" value=""/>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="detailDescription">
+                            Popis
+                        </label>
+                        <textarea readonly="readonly" name="detailDescription" id="detailDescription" placeholder="">
+                        </textarea>
+                    </fieldset>
                 </div>
             </div>
         </div>

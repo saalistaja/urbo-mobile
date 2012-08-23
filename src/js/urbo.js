@@ -367,3 +367,20 @@ function refreshCases() {
     listMyCases();
     return false;
 }
+
+function caseDetail(caseId) {
+    var feedbacks = $('body').data("feedbacks");
+    var i;
+    for(i = 0; i < feedbacks.length; i++) {
+        if(caseId == feedbacks[i].id) {
+            break;
+        }
+    }
+    if(i < feedbacks.length) {
+        $("#detailTitle").val(feedbacks[i].title);
+        $("#detailState").val(feedbacks[i].state);
+        $("#detailDateCreated").val(feedbacks[i].dateCreated);
+        $("#detailLastUpdated").val(feedbacks[i].lastUpdated);
+        $("#detailDescription").val(feedbacks[i].description);
+    }
+}
