@@ -300,6 +300,7 @@ function newCase() {
 }
 
 function listMyCases() {
+    console.log("Provider " + $('body').data("provider"));
     if($('body').data("provider") == undefined) {
         document.getElementById('myCasesLoginMessage').style.display = 'block';
         return;
@@ -338,20 +339,33 @@ function listMyCases() {
                    if(data.feedbacks.length == 0) {
                        document.getElementById('myCasesEmptyMessage').style.display = 'block';
                    } else {
+                       var feedbacks = data.feedbacks;
                        document.getElementById('myCasesEmptyMessage').style.display = 'none';
-                       // nagenerovat elementy
+                       $('body').data("feedbacks", feedbacks);
+                       
+                       var lastDateUpdated = null;
+                       for(var i = 0; i < feedbacks.length; i++) {
+                           if(lastDateUpdated != feedbacks[i].lastUpdated) {
+                                $("#dateSeparatorTemplate").tmpl(feedbacks[i]).appendTo("#myCasesListView");
+                           }
+                           lastDateUpdated = feedbacks[i].lastUpdated;
+                           $("#caseItemTemplate").tmpl(feedbacks[i]).appendTo("#myCasesListView");
+                       }
                    }
                    $('#send_message').text("Hotovo.");
                    dismissDialog();
+                   $('#myCasesListView').listview('refresh');
            }).fail(function () {
                    console.log('Message failed.');
                    dismissDialog();
-           });
+                   });
 }
 
 function refreshCases() {
     $('body').data("feedbacks", null);
-//    $("caseItem").clone().appendTo("myCasesListView")
-    //listMyCases();
+    $('#myCasesListView').innerHTML = "";
+    listMyCases();
+//    var feedbacks = [{state: "odesláno", title: "Problém č.1"}];
+//    $("#caseItemTemplate").tmpl(feedbacks).appendTo("#myCasesListView");
     return false;
 }

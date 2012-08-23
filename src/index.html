@@ -12,12 +12,33 @@
                 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.css" />
                 <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
                 <script src="http://code.jquery.com/mobile/1.2.0-alpha.1/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+                <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
                 <script type="text/javascript" charset="utf-8" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
                 <script src="js/index.js"></script>
                 <script src="js/urbo.js"></script>
                 <script src="js/urbo_settings.js"></script>
                 </head>
     <body>
+        
+        <!-- Date separator template -->
+        <script id="dateSeparatorTemplate" type="text/x-jQuery-tmpl">
+            <li class="ui-li ui-li-divider ui-bar-b" data-role="list-divider" role="heading">${lastUpdated}</li>
+        </script>
+        
+        <!-- Case item template -->
+        <script id="caseItemTemplate" type="text/x-jQuery-tmpl">
+            <li id="caseItem" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c">
+                <div class="ui-btn-inner ui-li">
+                    <div class="ui-btn-text">
+                        <a style="white-space:normal" class="ui-link-inherit" href="index.html">
+                            <p align="right">${state}</p>
+                            <p>${title}</p>
+                        </a>
+                    </div>
+                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                </div>
+            </li>
+        </script>
         
         <!-- Pages -->
         
@@ -73,20 +94,9 @@
                     <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
                     <div id="myCasesEmptyMessage" style="display: none;">Neevidujeme žádné Vaše případy.</div>
                     <ul id="myCasesListView" lass="ui-listview" data-role="listview" data-inset="true">
-                        <li class="ui-li ui-li-divider ui-bar-b" data-role="list-divider" role="heading">20.5.2012</li>
-                        <li id="caseItem" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c">
-                            <div class="ui-btn-inner ui-li">
-                                <div class="ui-btn-text">
-                                    <a style="white-space:normal" class="ui-link-inherit" href="index.html">
-                                        <p align="right">Odesláno</p>
-                                        <p>Rozbita silnice, neda se spravit</p>
-                                    </a>
-                                </div>
-                                <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"> </span>
-                            </div>
-                        </li>
+
                     </ul>
-                </div><!--/content-primary -->
+                </div>
             </div>
         </div>
         
@@ -176,10 +186,10 @@
                              }
                              });
             
-            // Check if the user is authorized
+            // When leaving the authorization dialog refresh data
             $('#account_dialog').live('pagehide',function(event) {
-                                  listMyCases();
-                              });
+                listMyCases();
+            });
             </script>
     </body>
 </html>

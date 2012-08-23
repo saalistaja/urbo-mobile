@@ -19,12 +19,12 @@ Urbo.Settings.Api.createFullUrlFor = function(relativeApiUrl) {
 };
 
 Urbo.Settings.Api.protocol = "http";
-Urbo.Settings.Api.hostName = "urbo.herokuapp.com";
-//Urbo.Settings.Api.hostName = "localhost";
-Urbo.Settings.Api.hostPort = "80";
-//Urbo.Settings.Api.hostPort = "8080";
-Urbo.Settings.Api.context = "";
-//Urbo.Settings.Api.context = "/urbo";
+//Urbo.Settings.Api.hostName = "urbo.herokuapp.com";
+Urbo.Settings.Api.hostName = "localhost";
+//Urbo.Settings.Api.hostPort = "80";
+Urbo.Settings.Api.hostPort = "8080";
+//Urbo.Settings.Api.context = "";
+Urbo.Settings.Api.context = "/urbo";
 Urbo.Settings.Api.photoUploadRelativeUrl = "/api/v1/uploadPhoto";
 Urbo.Settings.Api.urboItemSaveRelativeUrl = "/api/v1/case";
 Urbo.Settings.Api.urboListCases = "/apiFeedback/findByAuthor"
