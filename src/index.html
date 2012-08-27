@@ -31,6 +31,7 @@
                 <div class="ui-btn-inner ui-li">
                     <div class="ui-btn-text">
                         <a style="white-space:normal" class="ui-link-inherit" href="#casedetail" onclick="caseDetail(${id});">
+                            <img class="ui-li-thumb" src="${url}">
                             <p align="right">${state}</p>
                             <p>${title}</p>
                         </a>
@@ -91,7 +92,7 @@
             <div data-role="content" class="ui-content" role="main">
                 <div class="content-primary">
                     <div id="myCasesLoginMessage" style="display: none;">Pro zobrazení Vašich případů se prosím přihlaste.</div>
-                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="mycases_login_button">Přihlásit</a>
+                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
                     <div id="myCasesEmptyMessage" style="display: none;">Neevidujeme žádné Vaše případy.</div>
                     <ul id="myCasesListView" lass="ui-listview" data-role="listview" data-inset="true">
 
@@ -106,7 +107,14 @@
                 <h1>Detail případu</h1>
             </div>
             <div data-role="content">
-                <div id="detailTitle"></div>
+                <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+                    <li class="ui-li ui-li-static ui-btn-up-c">
+                        <p class="ui-li-aside ui-li-desc" id="detailState"></p>
+                        <h3 class="ui-li-heading"><div id="detailTitle">Titulek</div></h3>
+                        <p class="ui-li-desc" id="detailDateCreated">Založeno:</p>
+                        <p class="ui-li-desc" id="detailLastUpdated">Změněno:</p>
+                    </li>
+                </ul>
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
                         <img id="detailMapThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;" />
@@ -208,8 +216,10 @@
                              });
             
             // When leaving the authorization dialog refresh data
-            $('#mycases_login_button').live('pagehide',function(event) {
-                listMyCases();
+            $('#account_dialog').live('pagehide',function(event) {
+                  if($('body').data("currentPageId") == "mycases") {
+                      refreshCases();
+                  }
             });
             </script>
     </body>

@@ -298,6 +298,9 @@ function anonAuth() {
 }
 
 function newCase() {
+    //store the current page id
+    $('body').data("currentPageId", "create");
+
     getGpsCoordinates();
     $("#title").val(null);
     $("#description").val(null);
@@ -306,6 +309,9 @@ function newCase() {
 }
 
 function listMyCases() {
+    //store the current page id
+    $('body').data("currentPageId", "mycases");
+    
     if($('body').data("provider") == undefined) {
         document.getElementById('myCasesLoginMessage').style.display = 'block';
         return;
@@ -354,16 +360,16 @@ function listMyCases() {
                                 $("#dateSeparatorTemplate").tmpl(feedbacks[i]).appendTo("#myCasesListView");
                            }
                            lastDateUpdated = feedbacks[i].lastUpdated;
+                           feedbacks[i].url = Urbo.Settings.Api.getUrboImageThumbnailUrl(feedbacks[i].photoId);
                            $("#caseItemTemplate").tmpl(feedbacks[i]).appendTo("#myCasesListView");
                        }
                    }
                    $('#send_message').text("Hotovo.");
                    dismissDialog();
-                   $('#myCasesListView').listview('refresh');
            }).fail(function () {
                    console.log('Message failed.');
                    dismissDialog();
-                   });
+           });
 }
 
 function refreshCases() {
@@ -382,13 +388,13 @@ function caseDetail(caseId) {
         }
     }
     if(i < feedbacks.length) {
-        document.getElementById("detailTitle").innerHTML = feedbacks[i].title;
-//        $("#detailState").val(feedbacks[i].state);
-//        $("#detailDateCreated").val(feedbacks[i].dateCreated);
-//        $("#detailLastUpdated").val(feedbacks[i].lastUpdated);
-        $("#detailDescription").innerHTML = feedbacks[i].description;
-        $("#detailMapThumbnail").attr("src", retrieveMapForLocation(feedbacks[i].latitude, feedbacks[i].longitude));
-        console.log(Urbo.Settings.Api.getUrboImageThumbnailUrl(feedbacks[i].photoId));
+        $("#detailTitle").html(feedbacks[i].title);
+        $("#detailDateCreated").html("Založeno: " + feedbacks[i].dateCreated);
+        $("#detailLastUpdated").html("Změněno: " + feedbacks[i].lastUpdated);
+        $("#detailState").html(feedbacks[i].state);
         $("#detailPhotoThumbnail").attr("src", Urbo.Settings.Api.getUrboImageThumbnailUrl(feedbacks[i].photoId));
+        $("#detailMapThumbnail").attr("src", retrieveMapForLocation(feedbacks[i].latitude, feedbacks[i].longitude));
+        document.getElementById("detailDescription").innerHTML = "Popis: " + feedbacks[i].description;
+        console.log(Urbo.Settings.Api.getUrboImageThumbnailUrl(feedbacks[i].photoId));
     }
 }
