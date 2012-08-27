@@ -28,6 +28,7 @@ Urbo.Settings.Api.context = "/urbo";
 Urbo.Settings.Api.photoUploadRelativeUrl = "/api/v1/uploadPhoto";
 Urbo.Settings.Api.urboItemSaveRelativeUrl = "/api/v1/case";
 Urbo.Settings.Api.urboListCases = "/apiFeedback/findByAuthor"
+Urbo.Settings.Api.imageUrl = "/api/v1/thumbnail/${imageId}/100/100";
 
 Urbo.Settings.Oauth.Google.CallbackURL = "http://" + Urbo.Settings.Api.hostName + "/oauth2callback";
 Urbo.Settings.Oauth.Google.ClientSecret = "NMaJccwi-j_kHLFYRDTFiUZv";
@@ -36,7 +37,6 @@ Urbo.Settings.Oauth.Google.ClientId = "445034773821-iv2qgdkf4a50paekcaq0kkrseolg
 Urbo.Settings.Oauth.Facebook.ClientSecret = "658ce4d04f10ee67aff932f131f1e99f";
 Urbo.Settings.Oauth.Facebook.ClientId = "277531465694194";
 Urbo.Settings.Oauth.Facebook.CallbackURL = "http://" + Urbo.Settings.Api.hostName + "/oauth2callback";
-
 
 Urbo.Settings.Api.getPhotoUploadUrl = function() {
     return this.createFullUrlFor(this.photoUploadRelativeUrl);
@@ -48,4 +48,10 @@ Urbo.Settings.Api.getUrboItemSaveUrl = function() {
 
 Urbo.Settings.Api.getUrboListCasesUrl = function() {
     return this.createFullUrlFor(this.urboListCases);
+}
+
+Urbo.Settings.Api.getUrboImageThumbnailUrl = function(id) {
+    var imgUrl = this.createFullUrlFor(this.imageUrl);
+    imgUrl = imgUrl.replace("${imageId}", id);
+    return imgUrl;
 }

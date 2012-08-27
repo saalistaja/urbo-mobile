@@ -64,10 +64,6 @@
                     <label for="title">Titulek:</label>
                     <input type="text" name="title" id="title" value="" placeholder="Titulek"/>
                 </div>
-                <div data-role="fieldcontain" class="ui-hide-label">
-                    <label for="description">Podrobnosti:</label>
-                    <textarea cols="40" rows="8" name="description" id="description" placeholder="Podrobnosti.."></textarea>
-                </div>
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
                         <img id="mapThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;" />
@@ -77,6 +73,10 @@
                         <img id="photoThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;"/>
                         <a href="#photo_dialog" data-rel="dialog" data-transition="pop" data-role="button">Fotka...</a>
                     </div>
+                </div>
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <label for="description">Podrobnosti:</label>
+                    <textarea cols="40" rows="8" name="description" id="description" placeholder="Podrobnosti.."></textarea>
                 </div>
                 <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
             </div>
@@ -91,7 +91,7 @@
             <div data-role="content" class="ui-content" role="main">
                 <div class="content-primary">
                     <div id="myCasesLoginMessage" style="display: none;">Pro zobrazení Vašich případů se prosím přihlaste.</div>
-                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
+                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="mycases_login_button">Přihlásit</a>
                     <div id="myCasesEmptyMessage" style="display: none;">Neevidujeme žádné Vaše případy.</div>
                     <ul id="myCasesListView" lass="ui-listview" data-role="listview" data-inset="true">
 
@@ -106,53 +106,18 @@
                 <h1>Detail případu</h1>
             </div>
             <div data-role="content">
-                <div data-role="fieldcontain">
-                    <fieldset data-role="controlgroup">
-                        <label for="detailTitle">
-                            Titulek
-                        </label>
-                        <input type="text" readonly="readonly" name="detailTitle" id="detailTitle" value=""/>
-                    </fieldset>
-                </div>
-                <div data-role="fieldcontain">
-                    <label for="detailTitle">
-                        Stav
-                    </label>
-                    <fieldset data-role="controlgroup">
-                        <input type="text" readonly="readonly" name="detailState" id="detailState" value=""/>
-                    </fieldset>
-                </div>
+                <div id="detailTitle"></div>
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup" data-mini="true">
-                                <label for="detailDateCreated">
-                                    Založeno
-                                </label>
-                                <input type="text" readonly="readonly" name="detailDateCreated" id="detailDateCreated" value=""/>
-                            </fieldset>
-                        </div>
+                        <img id="detailMapThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;" />
+                        <a href="#map_dialog" data-rel="dialog" data-transition="pop" data-role="button">Místo...</a>
                     </div>
                     <div class="ui-block-b">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup" data-mini="true">
-                                <label for="detailLastUpdated">
-                                    Poslední změna
-                                </label>
-                                <input type="text" readonly="readonly" name="detailLastUpdated" id="detailLastUpdated" value=""/>
-                            </fieldset>
-                        </div>
+                        <img id="detailPhotoThumbnail" style="height: 100px; width: 100px; margin-left: auto; margin-right: auto; display: block;"/>
+                        <a href="#photo_dialog" data-rel="dialog" data-transition="pop" data-role="button">Fotka...</a>
                     </div>
                 </div>
-                <div data-role="fieldcontain">
-                    <fieldset data-role="controlgroup">
-                        <label for="detailDescription">
-                            Popis
-                        </label>
-                        <textarea readonly="readonly" name="detailDescription" id="detailDescription" placeholder="">
-                        </textarea>
-                    </fieldset>
-                </div>
+                <div id="detailDescription"></div>
             </div>
         </div>
         
@@ -243,7 +208,7 @@
                              });
             
             // When leaving the authorization dialog refresh data
-            $('#account_dialog').live('pagehide',function(event) {
+            $('#mycases_login_button').live('pagehide',function(event) {
                 listMyCases();
             });
             </script>

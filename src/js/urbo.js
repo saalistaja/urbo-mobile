@@ -19,14 +19,14 @@ function getPhoto(photoSourceType) {
 function retrieveMapForLocation(latitude, longitude) {
     var url = 'http://maps.google.com/maps/api/staticmap?center=' + latitude + ',' + longitude + '&zoom=15&size=100x100&maptype=roadmap&markers=color:red%7C' + latitude + ',' + longitude + '&sensor=true'
     mapDataView = document.getElementById("mapThumbnail");
-    $("#mapThumbnail").attr("src", url)
+    return url;
 }
 
 function refreshLocation(latitude, longitude) {
     console.log("Retrieved GPS coordinates " + latitude + "," + longitude);
     $('body').data("latitude", latitude);
     $('body').data("longitude", longitude);
-    retrieveMapForLocation(latitude, longitude);
+    $("#mapThumbnail").attr("src", retrieveMapForLocation(latitude, longitude));
 }
 
 function onGpsCoordsSuccess(position) {
@@ -152,7 +152,12 @@ function uploadData(photoId) {
             "name": $('body').data('name')
         }
     }
+    
+    console.log(Urbo.Settings.Api.getUrboItemSaveUrl());
+    
     var dataAsString = JSON.stringify(jsonObj);
+    
+    console.log(dataAsString);
     $.ajax({
         headers: {"Content-Type": "application/json"},
         type: "POST",
@@ -165,8 +170,9 @@ function uploadData(photoId) {
             $('.ui-dialog').dialog('close')
             $.mobile.changePage('#menu','flip',false,true)
 
-        }).fail(function () {
+        }).fail(function (error_message) {
             console.log('Message failed.');
+            console.log(error_message);
             $('.ui-dialog').dialog('close')
         });
 }
@@ -300,7 +306,6 @@ function newCase() {
 }
 
 function listMyCases() {
-    console.log("Provider " + $('body').data("provider"));
     if($('body').data("provider") == undefined) {
         document.getElementById('myCasesLoginMessage').style.display = 'block';
         return;
@@ -377,10 +382,13 @@ function caseDetail(caseId) {
         }
     }
     if(i < feedbacks.length) {
-        $("#detailTitle").val(feedbacks[i].title);
-        $("#detailState").val(feedbacks[i].state);
-        $("#detailDateCreated").val(feedbacks[i].dateCreated);
-        $("#detailLastUpdated").val(feedbacks[i].lastUpdated);
-        $("#detailDescription").val(feedbacks[i].description);
+        document.getElementById("detailTitle").innerHTML = feedbacks[i].title;
+//        $("#detailState").val(feedbacks[i].state);
+//        $("#detailDateCreated").val(feedbacks[i].dateCreated);
+//        $("#detailLastUpdated").val(feedbacks[i].lastUpdated);
+        $("#detailDescription").innerHTML = feedbacks[i].description;
+        $("#detailMapThumbnail").attr("src", retrieveMapForLocation(feedbacks[i].latitude, feedbacks[i].longitude));
+        console.log(Urbo.Settings.Api.getUrboImageThumbnailUrl(feedbacks[i].photoId));
+        $("#detailPhotoThumbnail").attr("src", Urbo.Settings.Api.getUrboImageThumbnailUrl(feedbacks[i].photoId));
     }
 }
