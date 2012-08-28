@@ -42,14 +42,13 @@
         </script>
         
         <!-- Pages -->
-        
         <div data-role="page" id="menu">
             <div data-role="header">
                 <h1>Urbo</h1>
             </div>
             <div data-role="content">
                 <p><a href="#create" data-icon="plus" data-role="button" data-transition="flip" onclick="newCase();">Nový urbo případ</a></p>
-                <p><a href="#mycases" data-icon="search" data-role="button" data-transition="flip" onclick="listMyCases();">Moje urbo případy</a></p>
+                <p><a href="#mycases" data-icon="search" data-role="button" data-transition="flip">Moje urbo případy</a></p>
                 <p><a href="#about" data-icon="info" data-role="button" data-transition="flip">O aplikaci</a></p>
             </div>
         </div>
@@ -91,8 +90,7 @@
             </div>
             <div data-role="content" class="ui-content" role="main">
                 <div class="content-primary">
-                    <div id="myCasesLoginMessage" style="display: none;">Pro zobrazení Vašich případů se prosím přihlaste.</div>
-                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button">Přihlásit</a>
+                    <a href="#account_dialog" data-rel="dialog" data-transition="pop" data-role="button" id="login_button_cases">Přihlásit</a>
                     <div id="myCasesEmptyMessage" style="display: none;">Neevidujeme žádné Vaše případy.</div>
                     <ul id="myCasesListView" lass="ui-listview" data-role="listview" data-inset="true">
 
@@ -214,12 +212,15 @@
                              showMapToAdjust($('body').data('latitude'), $('body').data('longitude'));
                              }
                              });
-            
-            // When leaving the authorization dialog refresh data
-            $('#account_dialog').live('pagehide',function(event) {
-                  if($('body').data("currentPageId") == "mycases") {
-                      refreshCases();
-                  }
+
+            $('#mycases').live('pageshow',function(event, ui) {
+               listMyCases();
+            });
+            $('#menu').live('pageshow', function(event, ui) {
+                $('body').data("currentPageId", "menu");
+            });
+            $('#account_dialog').live('pageshow', function(event, ui) {
+                $('body').data("currentPageId", "account_dialog");
             });
             </script>
     </body>

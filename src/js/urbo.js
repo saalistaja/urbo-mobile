@@ -283,6 +283,7 @@ function parseoAuthUser(data, provider) {
     $('body').data("name", data.name);
     $('body').data("provider", provider);
     $('#login_button .ui-btn-text').text(data.name + "@" + provider)
+    $('#login_button_cases .ui-btn-text').text(data.name + "@" + provider)
 }
 
 
@@ -294,6 +295,7 @@ function anonAuth() {
     $('body').data("name", "Anonymní zbabělec");
     $('body').data("provider", "None");
     $('#login_button .ui-btn-text').text($('body').data("name"));
+    $('#login_button_cases .ui-btn-text').text($('body').data("name"));
     return true;
 }
 
@@ -309,15 +311,20 @@ function newCase() {
 }
 
 function listMyCases() {
-    //store the current page id
+    
+    if($('body').data("currentPageId") == "menu" && $('body').data("provider") == undefined) {
+        $.mobile.changePage('#account_dialog');
+        return;
+    }
+
+    if($('body').data("currentPageId") == "account_dialog" && $('body').data("provider") == undefined) {
+        $.mobile.changePage('#menu');
+        return;
+    }
+    
     $('body').data("currentPageId", "mycases");
     
-    if($('body').data("provider") == undefined) {
-        document.getElementById('myCasesLoginMessage').style.display = 'block';
-        return;
-    } else {
-        document.getElementById('myCasesLoginMessage').style.display = 'none';
-    }
+    console.log($('body').data("feedbacks"));
     
     // we have already some feedbacks
     if($('body').data("feedbacks") != undefined) {
@@ -372,6 +379,7 @@ function listMyCases() {
            });
 }
 
+// Do full refresh of cases, remove all previous and get fresh data from server
 function refreshCases() {
     $('body').data("feedbacks", null);
     $('#myCasesListView').empty();
