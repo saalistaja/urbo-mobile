@@ -33,8 +33,7 @@ Urbo.Settings.Api.hostPort = "80";
 Urbo.Settings.Api.photoUploadRelativeUrl = "/api/v1/uploadPhoto";
 Urbo.Settings.Api.urboItemSaveRelativeUrl = "/api/v1/case";
 
-Urbo.Settings.Api.urboListCases = "/apiFeedback/findByAuthor"
-Urbo.Settings.Api.imageUrl = "/api/v1/thumbnail/${imageId}/100/100";
+Urbo.Settings.Api.imageUrl = "/api/v1/sqthumbnail/${imageId}/100";
 
 Urbo.Settings.Api.urboListCases = "/apiFeedback/findByAuthor";
 
